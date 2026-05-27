@@ -1,0 +1,20 @@
+/* ═══════════════════════════════════════════════
+   PALETTES — All color themes
+   ═══════════════════════════════════════════════ */
+
+body.pal-amber {--c-primary:#ffb000;--c-accent:#ff6600;--c-highlight:#ff2200;--c-warn:#ffdd00;--c-danger:#ff0000;--c-dim:#7a4a00;--c-bg:#000000;--c-panel:#080300;--c-border:#442200;--c-output:#040100;}
+body.pal-ice   {--c-primary:#00ffee;--c-accent:#0088ff;--c-highlight:#aa00ff;--c-warn:#00ffaa;--c-danger:#ff3366;--c-dim:#006655;--c-bg:#000508;--c-panel:#000510;--c-border:#003344;--c-output:#000308;}
+body.pal-blood {--c-primary:#ff2244;--c-accent:#ff8800;--c-highlight:#ff00aa;--c-warn:#ffcc00;--c-danger:#ffffff;--c-dim:#880022;--c-bg:#030000;--c-panel:#080000;--c-border:#440010;--c-output:#040000;}
+body.pal-ghost {--c-primary:#cccccc;--c-accent:#888888;--c-highlight:#ffffff;--c-warn:#aaaaaa;--c-danger:#ff3333;--c-dim:#444444;--c-bg:#000000;--c-panel:#040404;--c-border:#222222;--c-output:#020202;}
+body.pal-toxic {--c-primary:#aaff00;--c-accent:#ff00aa;--c-highlight:#ffff00;--c-warn:#00ffaa;--c-danger:#ff4400;--c-dim:#447700;--c-bg:#010200;--c-panel:#020600;--c-border:#224400;--c-output:#010300;}
+body.pal-deep  {--c-primary:#4488ff;--c-accent:#00ffcc;--c-highlight:#ff66ff;--c-warn:#88ccff;--c-danger:#ff4444;--c-dim:#1a3366;--c-bg:#000008;--c-panel:#000312;--c-border:#0a1a44;--c-output:#000210;}
+body.pal-solar {--c-primary:#ffcc00;--c-accent:#ff8800;--c-highlight:#ff4400;--c-warn:#ffffff;--c-danger:#ff0000;--c-dim:#886600;--c-bg:#020100;--c-panel:#080400;--c-border:#443300;--c-output:#040200;}
+body.pal-matrix{--c-primary:#00ff41;--c-accent:#008f11;--c-highlight:#00ff41;--c-warn:#003b00;--c-danger:#ff0000;--c-dim:#003300;--c-bg:#0d0208;--c-panel:#050205;--c-border:#003300;--c-output:#020102;}
+body.pal-neon  {--c-primary:#ff00ff;--c-accent:#00ffff;--c-highlight:#ffff00;--c-warn:#ff88ff;--c-danger:#ff0044;--c-dim:#880088;--c-bg:#000000;--c-panel:#080008;--c-border:#440044;--c-output:#030003;}
+body.pal-rust  {--c-primary:#ff6622;--c-accent:#ffaa44;--c-highlight:#ff2200;--c-warn:#ffddaa;--c-danger:#ff0000;--c-dim:#882200;--c-bg:#020100;--c-panel:#0a0400;--c-border:#441100;--c-output:#040100;}
+
+/* Palette bar buttons */
+.pb-ph{color:#33ff00;border-color:#33ff00;}.pb-am{color:#ffb000;border-color:#ffb000;}.pb-ic{color:#00ffee;border-color:#00ffee;}
+.pb-bl{color:#ff2244;border-color:#ff2244;}.pb-gh{color:#aaaaaa;border-color:#aaaaaa;}.pb-tx{color:#aaff00;border-color:#aaff00;}
+.pb-dp{color:#4488ff;border-color:#4488ff;}.pb-sl{color:#ffcc00;border-color:#ffcc00;}.pb-mx{color:#00ff41;border-color:#00ff41;}
+.pb-ne{color:#ff00ff;border-color:#ff00ff;}.pb-rs{color:#ff6622;border-color:#ff6622;}

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AETER Terminal v3.2 — Asset Indexer + Button Forge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="shell">
+
+  <!-- ════ TOP BAR ════ -->
+  <div id="topbar">
+    <div>
+      <div class="logo-title">AETER<span>&#9646;</span>TERMINAL</div>
+      <div class="version">v3.2.0 | MODULAR ASSET INDEXER + BTN FORGE</div>
+    </div>
+    <div id="sysinfo">
+      <span id="cpu-val">CPU: 31.2%</span> | <span id="ram-val">RAM: 1.4GB</span> | GPU: N/A<br>
+      <span class="utc" id="utc-val">UTC: ----</span>
+    </div>
+  </div>
+
+  <!-- ════ PALETTE BAR ════ -->
+  <div id="palettebar">
+    <span class="pal-label">PAL&rsaquo;</span>
+    <button class="pal-btn pb-ph active" onclick="applyPalette('')">PHOSPHOR</button>
+    <button class="pal-btn pb-am" onclick="applyPalette('pal-amber')">AMBER</button>
+    <button class="pal-btn pb-ic" onclick="applyPalette('pal-ice')">ICE</button>
+    <button class="pal-btn pb-bl" onclick="applyPalette('pal-blood')">BLOOD</button>
+    <button class="pal-btn pb-gh" onclick="applyPalette('pal-ghost')">GHOST</button>
+    <button class="pal-btn pb-tx" onclick="applyPalette('pal-toxic')">TOXIC</button>
+    <button class="pal-btn pb-dp" onclick="applyPalette('pal-deep')">DEEP</button>
+    <button class="pal-btn pb-sl" onclick="applyPalette('pal-solar')">SOLAR</button>
+    <button class="pal-btn pb-mx" onclick="applyPalette('pal-matrix')">MATRIX</button>
+    <button class="pal-btn pb-ne" onclick="applyPalette('pal-neon')">NEON</button>
+    <button class="pal-btn pb-rs" onclick="applyPalette('pal-rust')">RUST</button>
+  </div>
+
+  <!-- ════ STATUS BAR ════ -->
+  <div id="statusbar">
+    <div id="status-tag">[SYSTEM_ON_STANDBY]</div>
+    <div id="progress-wrap">
+      <span id="progress-label">PROGRESS:</span>
+      <span id="progress-bar">[....................] </span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div id="hash-display">HASH_ID: [----·----·----]</div>
+  </div>
+
+  <!-- ════ MAIN ════ -->
+  <div id="main">
+
+    <!-- ══════ LEFT PANEL ══════ -->
+    <div id="left-panel">
+      <div class="panel-header" id="panel-header-label">[ CONTROL_PANEL ]</div>
+
+      <!-- MODE SELECTOR -->
+      <div id="mode-wrap">
+        <div class="mode-label">OPERATIVE MODE</div>
+        <select id="mode-select">
+          <option value="TEXTO">&#9632; TEXT</option>
+          <option value="ARTIST">&#9670; ARTIST</option>
+          <option value="ARTEFACTO">&#9650; ARTIFACT</option>
+          <option value="SOFTWARE">&#9654; SOFTWARE</option>
+        </select>
+        <div id="mode-badge">MODE: TEXT — TEXT_RECORD</div>
+      </div>
+
+      <!-- INTEGRITY FILE (SHA-256) -->
+      <div class="field-group">
+        <div class="field-label">INTEGRITY FILE</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-lib" type="button" style="flex:1;font-size:6px;padding:6px 2px;" onclick="document.getElementById('f-file-integrity').click()">LOAD FILE</button>
+          <button class="btn btn-reset" type="button" style="flex:0.4;font-size:6px;padding:6px 2px;" onclick="clearFileHash()">CLEAR</button>
+        </div>
+        <input type="file" id="f-file-integrity" style="display:none" onchange="calculateFileHash(event)">
+        <input type="text" id="f-file-hash" placeholder="NO_FILE_HASHED" readonly style="font-size:6.5px;color:var(--c-accent);border-color:var(--c-border);margin-top:4px;text-align:center;">
+      </div>
+
+      <!-- DYNAMIC FIELDS -->
+      <div id="fields-container"></div>
+
+      <!-- NOTES -->
+      <div id="notas-container"></div>
+
+      <!-- ACTIONS -->
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="generateOutput()">&#9658; GENERATE</button>
+        <button class="btn btn-reset"   onclick="resetAllFields()">&#10005; RESET</button>
+      </div>
+      <div class="btn-row" style="padding-top:0;">
+        <button class="btn btn-lib" onclick="showQfModal()">&#9889; QUICK FILL</button>
+        <button class="btn btn-lib" onclick="showSaveModal()">&#9998; SAVE</button>
+        <button class="btn btn-lib" style="flex:0.6;font-size:6px;" onclick="switchTab('library')">&#9776; LIBRARY</button>
+      </div>
+      <div class="livehash-row">HASH &rsaquo; <span id="live-hash">----·----·----</span></div>
+
+      <!-- MEMORY -->
+      <div class="mem-section">
+        <div class="panel-header" style="margin:-7px -12px 7px;font-size:7px;">[ SYSTEM_MEMORY ]</div>
+        <div class="mem-btn-row">
+          <button class="btn-mem btn-export-mem" onclick="captureMem()">&#9711; CAPTURE</button>
+          <button class="btn-mem btn-export-mem" onclick="exportMem()">&#8659; EXPORT</button>
+          <button class="btn-mem btn-import-mem" onclick="importMem()">&#8657; IMPORT</button>
+        </div>
+        <div class="mem-counter">IN MEMORY: <span id="mem-count">0</span> FRAGMENTS</div>
+      </div>
+    </div><!-- /left-panel -->
+
+    <!-- ══════ RIGHT PANEL ══════ -->
+    <div id="right-panel">
+
+      <!-- OUTPUT HEADER -->
+      <div class="output-header">
+        <div class="output-title" id="output-title-label">OUTPUT_STREAM :: TEXT_RECORD</div>
+        <div class="output-actions">
+          <button class="btn-action btn-bbcode" onclick="exportBBCODE()">&#8855; BBCODE</button>
+          <button class="btn-action btn-png"    onclick="exportPNG()">&#11041; PNG x2</button>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div id="view-tabs">
+        <button class="vtab active" id="tab-editor"  onclick="switchTab('editor')">&#9654; VIEWER</button>
+        <button class="vtab"        id="tab-library" onclick="switchTab('library')">&#9782; LIBRARY</button>
+        <button class="vtab"        id="tab-forge"   onclick="switchTab('forge')">&#11041; BTN FORGE</button>
+      </div>
+
+      <!-- VIEW: EDITOR (canvas output) -->
+      <div id="view-editor">
+        <canvas id="output-canvas"></canvas>
+      </div>
+
+      <!-- VIEW: LIBRARY -->
+      <div id="view-library">
+        <div id="lib-search-wrap">
+          <input id="lib-search" placeholder="Search title, author, ID, mode...">
+          <select id="lib-sort">
+            <option value="newest">NEWEST</option>
+            <option value="alpha">ALPHA</option>
+            <option value="mode">MODE</option>
+            <option value="date">DATE</option>
+          </select>
+          <button class="btn-action btn-sync" onclick="showBulkModal()" style="font-size:7px;padding:5px 8px;">&#9889; BULK</button>
+          <button class="btn-action btn-png" onclick="exportAllRecords()" style="font-size:7px;padding:5px 8px;">&#8659; EXPORT</button>
+        </div>
+        <div id="lib-list"></div>
+      </div>
+
+      <!-- VIEW: FORGE -->
+      <div id="view-forge">
+        <div class="forge-section">
+          <div class="forge-section-title">[ BTN_CONFIG ]</div>
+          <div class="forge-grid">
+            <div>
+              <div class="forge-label">LABEL</div>
+              <input class="forge-input" id="fg-label" value="DOWNLOAD" maxlength="18">
+            </div>
+            <div>
+              <div class="forge-label">SUBLABEL</div>
+              <input class="forge-input" id="fg-sub" value="FREE · PDF" maxlength="28">
+            </div>
+            <div class="forge-full">
+              <div class="forge-label">LINK URL</div>
+              <input class="forge-input" id="fg-url" type="url" placeholder="https://...">
+            </div>
+            <div>
+              <div class="forge-label">STYLE</div>
+              <select class="forge-select" id="fg-style">
+                <option value="solid">SOLID</option>
+                <option value="outline">OUTLINE</option>
+                <option value="minimal">MINIMAL</option>
+              </select>
+            </div>
+            <div>
+              <div class="forge-label">WIDTH</div>
+              <select class="forge-select" id="fg-size">
+                <option value="400">SMALL 400px</option>
+                <option value="600" selected>MED 600px</option>
+                <option value="800">LARGE 800px</option>
+              </select>
+            </div>
+            <div>
+              <div class="forge-label">SIGNATURE</div>
+              <input class="forge-input" id="forge-sig" placeholder="Title|Author|Category|Date|Region">
+            </div>
+          </div>
+          <div class="forge-sync-note">&#9670; PALETTE: AUTO-SYNCED WITH CURRENT AETER PALETTE</div>
+        </div>
+
+        <div class="forge-section">
+          <div class="forge-section-title">[ PREVIEW ]</div>
+          <div class="forge-canvas-wrap"><canvas id="btn-preview-canvas"></canvas></div>
+          <div class="forge-btn-row">
+            <button class="forge-dl-btn forge-dl-primary" onclick="forgeExportPNG()">&#11041; DOWNLOAD PNG</button>
+            <button class="forge-dl-btn forge-dl-sec" onclick="forgeExportBB()">&#8855; COPY BBCODE</button>
+            <button class="forge-dl-btn forge-dl-sec" onclick="forgeExportTXT()">&#9776; EXPORT TXT</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /right-panel -->
+  </div><!-- /main -->
+
+  <!-- ════ LOG BAR ════ -->
+  <div id="log-bar">
+    <span>[LOG]</span>
+    <span id="log-msg">&gt; SYSTEM INITIALIZED. SELECT MODE AND FILL IN THE FIELDS.</span>
+    <span id="log-stream">:: AETER_v3.2 :: MODULAR :: NODE_ACTIVE :: KERNEL_ONLINE :: MEMORY_SECURE :: LIBRARY_READY :: INDEX_READY :: AETER_v3.2 ::</span>
+  </div>
+</div>
+
+<!-- ════ OVERLAYS / MODALS ════ -->
+<div id="toast"></div>
+
+<div id="confirm-modal">
+  <div class="confirm-box">
+    <div class="confirm-msg" id="confirm-msg"></div>
+    <div class="confirm-row">
+      <button class="confirm-yes" id="confirm-yes">CONFIRM</button>
+      <button class="confirm-no" id="confirm-no">CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<div id="save-modal">
+  <div class="save-box">
+    <div class="save-title">&#9998; SAVE TO LIBRARY</div>
+    <div class="save-field">
+      <div class="save-label">ASSET NAME</div>
+      <input type="text" class="save-input" id="save-name" placeholder="Enter asset name..." maxlength="80">
+    </div>
+    <div class="save-field">
+      <div class="save-label">CATEGORY</div>
+      <div class="save-datalist-combo">
+        <input type="text" class="save-input" id="save-cat" placeholder="Select or create category..." list="dl-cat-texto" maxlength="40">
+      </div>
+    </div>
+    <div class="save-actions">
+      <button class="save-btn save-btn-confirm" id="save-confirm">&#10003; SAVE</button>
+      <button class="save-btn save-btn-cancel" id="save-cancel">&#10005; CANCEL</button>
+    </div>
+  </div>
+</div>
+
+<div id="qf-modal">
+  <div class="qf-box" style="min-width:760px;max-width:900px;">
+    <div class="qf-title">&#9889; QUICK FILL & TEMPLATE FORGE</div>
+    <div style="display:flex;gap:16px;margin-top:12px;">
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+        <div class="qf-hint" style="margin-bottom:4px;">Paste raw Key-Value pairs — one per line, KEY: value.</div>
+        <textarea class="qf-textarea" id="qf-text" placeholder="Paste your structured data here..." style="min-height:260px;"></textarea>
+        <div class="qf-actions" style="margin-top:8px;">
+          <button class="qf-btn qf-btn-parse" id="qf-parse">&#10003; FILL FIELDS</button>
+          <button class="qf-btn qf-btn-cancel" id="qf-cancel">&#10005; CANCEL</button>
+        </div>
+      </div>
+      <div style="width:300px;display:flex;flex-direction:column;border-left:1px solid var(--c-border);padding-left:16px;">
+        <div class="qf-hint" style="color:var(--c-accent);font-family:'Press Start 2P',monospace;font-size:7px;margin-bottom:8px;">[ AI_TEMPLATE ]</div>
+        <div class="qf-hint" style="margin-bottom:8px;line-height:1.5;">Copy this template and send it to any AI with your raw data:</div>
+        <textarea id="qf-template-view" readonly style="flex:1;background:color-mix(in srgb,var(--c-accent) 3%,#000);border:1px solid var(--c-border);color:var(--c-accent);font-family:'Share Tech Mono',monospace;font-size:9.5px;padding:8px;resize:none;min-height:190px;line-height:1.5;outline:none;"></textarea>
+        <button class="btn btn-primary" type="button" onclick="copyQFTemplate()" style="margin-top:8px;font-size:6.5px;padding:8px 4px;">▸ COPY AI TEMPLATE</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="bulk-modal">
+  <div class="bulk-box">
+    <div class="bulk-title">&#9889; BULK IMPORT</div>
+    <div class="bulk-body">
+      <div class="bulk-left">
+        <div class="bulk-hint">Paste multiple entries separated by <strong>---</strong>. Each block starts with <strong>## MODE</strong>.</div>
+        <textarea class="bulk-textarea" id="bulk-text" placeholder="## TEXTO\nTitle: ...\nMaker: ...\n---\n## ARTIST\nName: ..."></textarea>
+        <div class="bulk-actions">
+          <button class="bulk-btn bulk-btn-import" id="bulk-import">&#10003; IMPORT</button>
+          <button class="bulk-btn bulk-btn-cancel" id="bulk-cancel">&#10005; CANCEL</button>
+        </div>
+      </div>
+      <div class="bulk-right">
+        <div class="bulk-right-label">[ AI_TEMPLATES ]</div>
+        <div class="bulk-mode-card bulk-card-TEXTO">
+          <span><span class="bulk-card-icon">&#9632;</span><span class="bulk-card-name">TEXT</span></span>
+          <div class="bulk-card-btns">
+            <button class="bulk-card-btn" onclick="copyBulkTemplate('TEXTO')">COPY</button>
+            <button class="bulk-card-btn" onclick="viewBulkTemplate('TEXTO')">VIEW</button>
+          </div>
+        </div>
+        <div class="bulk-mode-card bulk-card-ARTIST">
+          <span><span class="bulk-card-icon">&#9670;</span><span class="bulk-card-name">ARTIST</span></span>
+          <div class="bulk-card-btns">
+            <button class="bulk-card-btn" onclick="copyBulkTemplate('ARTIST')">COPY</button>
+            <button class="bulk-card-btn" onclick="viewBulkTemplate('ARTIST')">VIEW</button>
+          </div>
+        </div>
+        <div class="bulk-mode-card bulk-card-ARTEFACTO">
+          <span><span class="bulk-card-icon">&#9650;</span><span class="bulk-card-name">ARTIFACT</span></span>
+          <div class="bulk-card-btns">
+            <button class="bulk-card-btn" onclick="copyBulkTemplate('ARTEFACTO')">COPY</button>
+            <button class="bulk-card-btn" onclick="viewBulkTemplate('ARTEFACTO')">VIEW</button>
+          </div>
+        </div>
+        <div class="bulk-mode-card bulk-card-SOFTWARE">
+          <span><span class="bulk-card-icon">&#9654;</span><span class="bulk-card-name">SOFTWARE</span></span>
+          <div class="bulk-card-btns">
+            <button class="bulk-card-btn" onclick="copyBulkTemplate('SOFTWARE')">COPY</button>
+            <button class="bulk-card-btn" onclick="viewBulkTemplate('SOFTWARE')">VIEW</button>
+          </div>
+        </div>
+        <div class="bulk-preview">
+          <div class="bulk-preview-label">[ TEMPLATE_PREVIEW ]</div>
+          <textarea class="bulk-preview-area" id="bulk-template-view" readonly placeholder="Select a mode and click VIEW..."></textarea>
+        </div>
+        <div class="bulk-preview" style="margin-top:8px;">
+          <div class="bulk-preview-label">[ PARSED_RECORDS ]</div>
+          <textarea class="bulk-preview-area" id="bulk-preview-area" readonly placeholder="// PARSED RECORDS WILL APPEAR HERE"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ DATALISTS ════ -->
+<datalist id="dl-sector">
+  <option value="South America"><option value="Central America"><option value="North America">
+  <option value="Western Europe"><option value="Eastern Europe"><option value="Northern Europe">
+  <option value="Southern Europe"><option value="Russia / Central Asia"><option value="East Asia">
+  <option value="South Asia"><option value="Southeast Asia"><option value="Middle East">
+  <option value="North Africa"><option value="Sub-Saharan Africa"><option value="East Africa">
+  <option value="West Africa"><option value="Southern Africa"><option value="Oceania">
+  <option value="Caribbean"><option value="Unknown">
+</datalist>
+<datalist id="dl-campo">
+  <option value="ART-PICT"><option value="ART-CINE"><option value="ART-MUSI">
+  <option value="ART-LITE"><option value="ART-PERF"><option value="ART-URBA"><option value="ART-DIGI">
+</datalist>
+<datalist id="dl-formato">
+  <option value="Film"><option value="Series"><option value="Manga"><option value="Comic">
+  <option value="Game"><option value="Theater"><option value="Concert"><option value="Animation">
+  <option value="Novel"><option value="Podcast">
+</datalist>
+<datalist id="dl-cat-texto">
+  <option value="[LIBRO]"><option value="[BIO-AR]"><option value="[SIST-H]">
+  <option value="[RED-N]"><option value="[SOC-B]"><option value="[SEG-SNC]">
+  <option value="[TEC-OP]"><option value="[LOG-PH]"><option value="[DIN-E]"><option value="[DATA-X]">
+</datalist>
+<datalist id="dl-cat-soft">
+  <option value="SYS-OS"><option value="SEC-CIPH"><option value="NET-PROTO">
+  <option value="DEV-TOOL"><option value="BIO-DATA"><option value="AI-ENGINE">
+  <option value="DATA-VIZ"><option value="MEDIA-PROC">
+</datalist>
+
+<script type="module" src="/src/js/app.js"></script>
+</body>
+</html>

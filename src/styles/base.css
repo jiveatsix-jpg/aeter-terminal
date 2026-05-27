@@ -1,0 +1,48 @@
+/* ═══════════════════════════════════════════════
+   BASE — Variables, Reset, Body, Scanlines
+   ═══════════════════════════════════════════════ */
+
+:root {
+  --c-primary:#33ff00; --c-accent:#00ccff; --c-highlight:#ff00ff;
+  --c-warn:#ffff00; --c-danger:#ff3333; --c-dim:#1a7a00;
+  --c-bg:#000000; --c-panel:#010801; --c-border:#144414; --c-output:#000400;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { zoom:1.5; }
+
+html, body {
+  background:var(--c-bg);
+  color:var(--c-primary);
+  font-family:'Press Start 2P',monospace;
+  font-size:10px;
+  height:100%;
+  overflow:hidden;
+  cursor:crosshair;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.12) 2px,rgba(0,0,0,.12) 4px);
+  pointer-events:none;
+  z-index:9999;
+}
+
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:rgba(0,255,0,.008);
+  pointer-events:none;
+  z-index:9998;
+  animation:flicker .15s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,91%,94%,100% { opacity:1; }
+  92% { opacity:.93; }
+  95% { opacity:.97; }
+}

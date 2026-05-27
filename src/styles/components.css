@@ -1,0 +1,133 @@
+/* ═══════════════════════════════════════════════
+   COMPONENTS — Inputs, Buttons, Mode Selector, Library, Forge, Toast
+   ═══════════════════════════════════════════════ */
+
+/* ── MODE SELECTOR ── */
+#mode-wrap { padding:8px 12px; border-bottom:1px solid var(--c-border); background:color-mix(in srgb,var(--c-accent) 5%,#000); }
+.mode-label { font-family:'Share Tech Mono',monospace; color:var(--c-accent); font-size:9px; letter-spacing:2px; margin-bottom:5px; display:flex; align-items:center; gap:5px; }
+.mode-label::before { content:'⬡'; font-size:10px; }
+#mode-select {
+  width:100%; background:#000; border:1px solid var(--c-accent); color:var(--c-accent);
+  font-family:'Press Start 2P',monospace; font-size:7px; padding:7px 8px;
+  outline:none; cursor:pointer; -webkit-appearance:none; appearance:none; letter-spacing:1px;
+}
+#mode-select:focus { box-shadow:0 0 8px var(--c-accent); }
+#mode-badge { font-family:'Share Tech Mono',monospace; font-size:8px; color:var(--c-dim); margin-top:4px; letter-spacing:1px; }
+
+/* ── FIELDS ── */
+.field-group { padding:6px 12px; border-bottom:1px solid #0a120a; }
+.field-label { font-family:'Share Tech Mono',monospace; color:var(--c-accent); font-size:9px; letter-spacing:2px; margin-bottom:4px; display:flex; align-items:center; gap:5px; }
+.field-label::before { content:'▸'; color:var(--c-highlight); font-size:10px; }
+
+/* ── INPUTS ── */
+input[type="text"], input[type="url"], textarea {
+  width:100%; background:color-mix(in srgb,var(--c-primary) 3%,#000);
+  border:1px solid var(--c-border); color:var(--c-primary);
+  font-family:'Press Start 2P',monospace; font-size:7px;
+  padding:6px 8px; outline:none; resize:none;
+  transition:border-color .2s,box-shadow .2s;
+  -webkit-appearance:none; appearance:none; line-height:1.6;
+}
+input:focus, textarea:focus { border-color:var(--c-accent); box-shadow:0 0 5px color-mix(in srgb,var(--c-accent) 40%,transparent); color:var(--c-accent); }
+textarea { height:78px; }
+.combo-wrap { position:relative; }
+.combo-input { width:100%; }
+
+/* ── BUTTONS ── */
+.btn-row { padding:7px 12px; display:flex; gap:6px; }
+.btn {
+  flex:1; font-family:'Press Start 2P',monospace; font-size:7px;
+  letter-spacing:1px; padding:8px 4px; cursor:pointer; border:none;
+  text-transform:uppercase; transition:all .15s;
+}
+.btn-primary { background:color-mix(in srgb,var(--c-primary) 8%,#000); color:var(--c-primary); border:1px solid var(--c-primary); text-shadow:0 0 6px var(--c-primary); }
+.btn-primary:hover { background:color-mix(in srgb,var(--c-primary) 15%,#000); box-shadow:0 0 8px var(--c-primary); }
+.btn-primary:active { transform:scale(.97); }
+.btn-reset { background:color-mix(in srgb,var(--c-danger) 8%,#000); color:var(--c-danger); border:1px solid var(--c-danger); }
+.btn-reset:hover { background:color-mix(in srgb,var(--c-danger) 15%,#000); }
+.btn-lib { background:color-mix(in srgb,var(--c-highlight) 8%,#000); color:var(--c-highlight); border:1px solid var(--c-highlight); }
+.btn-lib:hover { background:color-mix(in srgb,var(--c-highlight) 15%,#000); box-shadow:0 0 8px var(--c-highlight); }
+
+.livehash-row { padding:0 12px 7px; font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--c-dim); letter-spacing:1px; }
+#live-hash { color:var(--c-primary); }
+
+.btn-action {
+  font-family:'Press Start 2P',monospace; font-size:7px; padding:5px 8px;
+  cursor:pointer; border:none; letter-spacing:1px; text-transform:uppercase; transition:all .15s;
+}
+.btn-bbcode { background:color-mix(in srgb,var(--c-accent) 8%,#000); color:var(--c-accent); border:1px solid var(--c-accent); }
+.btn-bbcode:hover { box-shadow:0 0 8px var(--c-accent); }
+.btn-png { background:color-mix(in srgb,var(--c-highlight) 8%,#000); color:var(--c-highlight); border:1px solid var(--c-highlight); }
+.btn-png:hover { box-shadow:0 0 8px var(--c-highlight); }
+.btn-sync { background:color-mix(in srgb,var(--c-warn) 8%,#000); color:var(--c-warn); border:1px solid var(--c-warn); }
+.btn-sync:hover { box-shadow:0 0 8px var(--c-warn); }
+
+/* ── MEMORY SECTION ── */
+.mem-section { padding:7px 12px; border-bottom:1px solid #0a120a; }
+.mem-btn-row { display:flex; gap:6px; }
+.btn-mem { font-family:'Press Start 2P',monospace; font-size:6px; padding:6px 8px; cursor:pointer; text-transform:uppercase; transition:all .15s; flex:1; }
+.btn-export-mem { background:color-mix(in srgb,var(--c-accent) 8%,#000); color:var(--c-accent); border:1px solid var(--c-accent); }
+.btn-export-mem:hover { box-shadow:0 0 6px var(--c-accent); }
+.btn-import-mem { background:color-mix(in srgb,var(--c-warn) 8%,#000); color:var(--c-warn); border:1px solid var(--c-warn); }
+.btn-import-mem:hover { box-shadow:0 0 6px var(--c-warn); }
+.mem-counter { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--c-dim); margin-top:5px; letter-spacing:1px; }
+#mem-count { color:var(--c-primary); }
+
+/* ── LIBRARY ── */
+#view-library { flex:1; overflow:auto; padding:10px 14px; background:#000; display:none; flex-direction:column; gap:5px; }
+#view-library::-webkit-scrollbar { width:5px; }
+#view-library::-webkit-scrollbar-track { background:#000; }
+#view-library::-webkit-scrollbar-thumb { background:var(--c-border); }
+.lib-empty { font-family:'Share Tech Mono',monospace; color:var(--c-dim); font-size:10px; padding:20px; letter-spacing:1px; }
+.lib-item { border:1px solid var(--c-border); background:var(--c-panel); padding:7px 10px; cursor:pointer; transition:all .15s; display:grid; grid-template-columns:60px auto 1fr auto auto; align-items:center; gap:8px; }
+.lib-item:hover { border-color:var(--c-accent); }
+.lib-item.active-item { border-color:var(--c-highlight); }
+.lib-id { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--c-highlight); letter-spacing:1px; }
+.lib-mode-badge { font-family:'Press Start 2P',monospace; font-size:6px; padding:2px 5px; border:1px solid; text-transform:uppercase; }
+.lib-info { overflow:hidden; }
+.lib-title { font-size:7px; color:var(--c-primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:3px; }
+.lib-meta { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--c-dim); }
+.lib-cat { font-family:'Share Tech Mono',monospace; font-size:8px; color:var(--c-accent); white-space:nowrap; }
+.lib-actions { display:flex; gap:5px; }
+.lib-btn { font-family:'Press Start 2P',monospace; font-size:6px; padding:4px 7px; cursor:pointer; border:none; text-transform:uppercase; transition:all .15s; }
+.lib-btn-load { background:color-mix(in srgb,var(--c-primary) 8%,#000); color:var(--c-primary); border:1px solid var(--c-primary); }
+.lib-btn-load:hover { box-shadow:0 0 6px var(--c-primary); }
+.lib-btn-del { background:color-mix(in srgb,var(--c-danger) 8%,#000); color:var(--c-danger); border:1px solid var(--c-danger); }
+.lib-btn-del:hover { box-shadow:0 0 6px var(--c-danger); }
+#lib-search-wrap { display:flex; gap:8px; margin-bottom:8px; flex-shrink:0; }
+#lib-search { flex:1; font-family:'Share Tech Mono',monospace; font-size:10px; background:#000; border:1px solid var(--c-border); color:var(--c-primary); padding:5px 8px; outline:none; }
+#lib-search:focus { border-color:var(--c-accent); }
+#lib-sort { font-family:'Share Tech Mono',monospace; font-size:10px; background:#000; border:1px solid var(--c-border); color:var(--c-accent); padding:5px 8px; outline:none; cursor:pointer; }
+
+/* ── TOAST ── */
+#toast {
+  position:fixed; bottom:42px; right:20px;
+  background:var(--c-panel); border:1px solid var(--c-primary); color:var(--c-primary);
+  font-family:'Press Start 2P',monospace; font-size:8px; padding:8px 14px;
+  text-shadow:0 0 6px var(--c-primary); box-shadow:0 0 12px var(--c-primary);
+  opacity:0; pointer-events:none; transition:opacity .3s; z-index:10000; letter-spacing:1px;
+}
+#toast.show { opacity:1; }
+
+/* ── BUTTON FORGE ── */
+#view-forge { flex:1; overflow:auto; padding:14px; background:#000; display:none; flex-direction:column; gap:10px; }
+#view-forge::-webkit-scrollbar { width:5px; }
+#view-forge::-webkit-scrollbar-track { background:#000; }
+#view-forge::-webkit-scrollbar-thumb { background:var(--c-border); }
+.forge-section { border:1px solid var(--c-border); background:var(--c-panel); padding:10px 12px; }
+.forge-section-title { font-size:7px; color:var(--c-accent); letter-spacing:2px; margin-bottom:8px; text-shadow:0 0 6px var(--c-accent); }
+.forge-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.forge-full { grid-column:1/-1; }
+.forge-label { font-family:'Share Tech Mono',monospace; color:var(--c-accent); font-size:9px; letter-spacing:2px; margin-bottom:4px; }
+.forge-input { width:100%; background:color-mix(in srgb,var(--c-primary) 3%,#000); border:1px solid var(--c-border); color:var(--c-primary); font-family:'Press Start 2P',monospace; font-size:7px; padding:5px 7px; outline:none; -webkit-appearance:none; appearance:none; }
+.forge-input:focus { border-color:var(--c-accent); box-shadow:0 0 4px color-mix(in srgb,var(--c-accent) 40%,transparent); }
+.forge-select { width:100%; background:#000; border:1px solid var(--c-border); color:var(--c-accent); font-family:'Press Start 2P',monospace; font-size:7px; padding:5px 7px; outline:none; cursor:pointer; -webkit-appearance:none; appearance:none; }
+.forge-canvas-wrap { border:1px solid var(--c-border); background:#000; display:inline-block; max-width:100%; overflow:auto; }
+#btn-preview-canvas { display:block; image-rendering:pixelated; }
+.forge-btn-row { display:flex; gap:8px; margin-top:10px; }
+.forge-dl-btn { font-family:'Press Start 2P',monospace; font-size:7px; padding:7px 12px; cursor:pointer; border:none; letter-spacing:1px; text-transform:uppercase; transition:all .15s; }
+.forge-dl-primary { background:color-mix(in srgb,var(--c-primary) 8%,#000); color:var(--c-primary); border:1px solid var(--c-primary); }
+.forge-dl-primary:hover { box-shadow:0 0 8px var(--c-primary); }
+.forge-dl-sec { background:color-mix(in srgb,var(--c-accent) 8%,#000); color:var(--c-accent); border:1px solid var(--c-accent); }
+.forge-dl-sec:hover { box-shadow:0 0 8px var(--c-accent); }
+.forge-sync-note { font-family:'Share Tech Mono',monospace; font-size:9px; color:var(--c-dim); letter-spacing:1px; margin-top:4px; }
